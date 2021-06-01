@@ -11,9 +11,6 @@ class User {
   name: string;
 
   @Column()
-  username: string;
-
-  @Column()
   email: string;
 
   @Column()
@@ -25,12 +22,16 @@ class User {
   @Column()
   isAdmin: boolean;
 
+  @Column()
+  avatar: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   constructor() {
     if(!this.id) {
       this.id = uuidV4();
+      this.isAdmin = false;
     }
   }
 
