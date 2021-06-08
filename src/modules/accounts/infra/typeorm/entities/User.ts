@@ -32,7 +32,7 @@ class User {
     if(!this.id) {
       this.id = uuidV4();
       this.isAdmin = false;
-      
+      this.avatar = '';
     }
   }
 
