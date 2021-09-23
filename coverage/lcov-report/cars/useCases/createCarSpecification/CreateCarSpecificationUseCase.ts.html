@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for accounts/useCases/createUser/CreateUserUseCase.ts</title>
+    <title>Code coverage report for cars/useCases/createCarSpecification/CreateCarSpecificationUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">accounts/useCases/createUser</a> CreateUserUseCase.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">cars/useCases/createCarSpecification</a> CreateCarSpecificationUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.86% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/28</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.86% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/28</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
@@ -81,10 +81,7 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -92,18 +89,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -111,34 +104,32 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { inject, injectable } from "tsyringe";
-import { hash } from "bcryptjs";
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { AppError } from "@shared/errors/AppError";
 &nbsp;
-import { IUsersRepository } from "../../repositories/IUsersRepository";
-import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
-import { AppError } from "../../../../shared/errors/AppError";
+interface IRequest {
+  car_id: string;
+  specifications_id: string[];
+}
 &nbsp;
-@injectable()
-class CreateUserUseCase {
+class CreateCarSpecificationUseCase {
   constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository) {}
+    private carsRepository: ICarsRepository
+  ){}
 &nbsp;
-    async execute( { name, email, password, driver_license }: ICreateUserDTO) : Promise&lt;void&gt; {
+  async execute( { car_id, specifications_id }: IRequest ): Promise&lt;void&gt; { 
+    
+    const carExists = await this.carsRepository.findById(car_id);
 &nbsp;
-      const userAlreadyExists = await this.usersRepository.findByEmail(email);
-&nbsp;
-      if(userAlreadyExists)<span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >        throw new AppError("User already exists");</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-&nbsp;
-      const passwordHash = await hash(password, 8);
-      
-      await this.usersRepository.create({ name, email, password: passwordHash, driver_license });
+    if(!carExists) {
+      throw new AppError("Car does not exist");
     }
   }
 &nbsp;
-export { CreateUserUseCase };</pre></td></tr></table></pre>
+}
+&nbsp;
+export { CreateCarSpecificationUseCase };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
