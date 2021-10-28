@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICarsRepository } from "@modules/cars/repositories/iCarsRepository";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 

@@ -1,4 +1,4 @@
-import { Response, Router } from "express";
+import { Router } from "express";
 
 import { CreateCategoryController } from "../../../../modules/cars/useCases/createCategory/CreateCategoryController";
 import { ListCategoriesController } from "../../../../modules/cars/useCases/listCategories/ListCategoriesController";
