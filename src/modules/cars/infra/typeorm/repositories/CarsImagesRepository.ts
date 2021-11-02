@@ -1,5 +1,6 @@
-import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { getRepository, Repository } from "typeorm";
+
+import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { CarImage } from "../entities/CarImage";
 
 
@@ -11,8 +12,7 @@ class CarsImagesRepository implements ICarsImagesRepository{
   }
 
   async create(car_id: string, image_name: string): Promise<CarImage> {
-    
-    const carImage = await this.repository.create({
+    const carImage = this.repository.create({
       car_id,
       image_name,
     })

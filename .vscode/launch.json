@@ -4,12 +4,16 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Docker: Attach to Node",
+      // "protocol": "inspector",
+      "name": "Launch Program",
       "port": 9229,
-      "address": "localhost",
+      // "address": "localhost",
+      "remoteRoot": "/usr/app/",
       "sourceMapPathOverrides": {
-        "/usr/app/*": "${workspaceRoot}/*"
-      }
+        "/app/*": "${workspaceRoot}/*"
+      },
+      "skipFiles": ["<node_internals>/**"],
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     }
   ]
 }
