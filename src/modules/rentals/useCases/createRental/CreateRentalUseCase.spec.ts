@@ -3,17 +3,18 @@ import dayjs from "dayjs";
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 import { CreateRentalUseCase } from "./CreateRentalUseCase";
-import { DayJSDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
+import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 
 let createRentalUseCase: CreateRentalUseCase;
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
-let dayjsDateProvider: DayJSDateProvider;
+let dayjsDateProvider: DayjsDateProvider;
 
 describe("Create Rental", () => {
   const dayAdd24hours = dayjs().add(1, "day").toDate();
+
   beforeEach(() => {
     rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
-    dayjsDateProvider = new DayJSDateProvider();
+    dayjsDateProvider = new DayjsDateProvider ();
     createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory, dayjsDateProvider);
   });
 
@@ -25,8 +26,7 @@ describe("Create Rental", () => {
     });
 
     expect(rental).toHaveProperty("id");
-
-    expect(rental).toHaveProperty("star_date");
+    expect(rental).toHaveProperty("start_date");
   });
 
   it("should not be able to create a new rental if there is another open to the same user", async () => {
